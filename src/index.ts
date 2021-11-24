@@ -19,7 +19,7 @@ let promise: any = () => fetch('https://icanhazdadjoke.com/', option)
   .catch(err => alert('Ha habido un problema ' +err));
 
   window.onload = promise
-let textJoke = "";
+let textJoke: string = "";
 
 //interface
 interface RateJoke {
@@ -52,6 +52,7 @@ function selectFinalRate(){
   let finalRate = acudits.pop();
   reportAcudits.push(finalRate)
   acudits = [];
+  return console.log(reportAcudits)
 }
 
 function nextJoke(): string { 

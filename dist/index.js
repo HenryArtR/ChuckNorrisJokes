@@ -38,6 +38,7 @@ function selectFinalRate() {
     var finalRate = acudits.pop();
     reportAcudits.push(finalRate);
     acudits = [];
+    return console.log(reportAcudits);
 }
 function nextJoke() {
     promise();
