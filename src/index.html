@@ -19,8 +19,13 @@
                     <div class="col-12 d-flex justify-content-center m-4">
                         <p id="joke"></p>
                     </div>
+                    <div class="col-12 d-flex justify-content-center m-4 btn-toolbar">
+                        <button class="btn btn-info m-1" id="btn1" onclick="rateJoke(1)">1</button>
+                        <button class="btn btn-info m-1" id="btn2" onclick="rateJoke(2)">2</button>
+                        <button class="btn btn-info m-1" id="btn3" onclick="rateJoke(3)">3</button>
+                    </div>
                     <div class="col-12 d-flex justify-content-center m-4">
-                        <button class="btn btn-primary" onclick="nextJoke()">Siguiente</button>
+                        <button class="btn btn-primary" type="submit" onclick="nextJoke()" onsubmit="">Siguiente</button>
                     </div>
                 </div>
             </div>

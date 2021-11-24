@@ -1,31 +1,62 @@
-let url: string = 'https://icanhazdadjoke.com/'
+//html getters
+let p = document.getElementById('joke');
+let btn1 = document.getElementById('btn1')
+let btn2 = document.getElementById('btn2')
+let btn3 = document.getElementById('btn3')
+//objects
 let option: object = {
   headers: {
     Accept: 'application/json'
   }
 }
-
-let p = document.getElementById('joke')
-
-let newJokes: string[] = [];
-
-function randomJoke() {
-  
-  fetch(url, option)
+//promesa
+let promise: any = () => fetch('https://icanhazdadjoke.com/', option)
   .then(response => response.json())
   .then(jokes => {
-    newJokes.push(jokes.joke);
-    return p?.textContent = newJokes.join()
+    textJoke = jokes.joke;
+    p!.textContent = textJoke
   })
-  .catch(err => console.log(err))
+  .catch(err => alert('Ha habido un problema ' +err));
+
+  window.onload = promise
+let textJoke = "";
+
+//interface
+interface RateJoke {
+  joke: string,
+  score: number,
+  date: string
   
 }
-randomJoke()
 
+//arrays
+let acudits: object[] = []
+let reportAcudits: object[] = [];
 
+//functions
+function rateJoke(scoreJoke: number){
+  const newDate = new Date();
+  let textDate = newDate.toISOString();
+  let rate: RateJoke = {
+    joke: textJoke,
+    score: scoreJoke,
+    date: textDate
+  }
+  
+    acudits.push(rate)
+  
+}
 
-function nextJoke() {
-  newJokes.pop();
-  randomJoke()
+function selectFinalRate(){
+  
+  let finalRate = acudits.pop();
+  reportAcudits.push(finalRate)
+  acudits = [];
+}
+
+function nextJoke(): string { 
+  promise()
+  selectFinalRate()
+  return p!.textContent = textJoke
   
 }
