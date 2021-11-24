@@ -1,63 +1,60 @@
 //html getters
 let p = document.getElementById('joke');
-let btn1 = document.getElementById('btn1')
-let btn2 = document.getElementById('btn2')
-let btn3 = document.getElementById('btn3')
+let btn1 = document.getElementById('btn1');
+let btn2 = document.getElementById('btn2');
+let btn3 = document.getElementById('btn3');
 //objects
 let option: object = {
   headers: {
-    Accept: 'application/json'
-  }
-}
+    Accept: 'application/json',
+  },
+};
 //promesa
-let promise: any = () => fetch('https://icanhazdadjoke.com/', option)
-  .then(response => response.json())
-  .then(jokes => {
-    textJoke = jokes.joke;
-    p!.textContent = textJoke
-  })
-  .catch(err => alert('Ha habido un problema ' +err));
+let promise: any = () =>
+  fetch('https://icanhazdadjoke.com/', option)
+    .then((response) => response.json())
+    .then((jokes) => {
+      textJoke = jokes.joke;
+      p!.textContent = textJoke;
+    })
+    .catch((err) => alert('Ha habido un problema ' + err));
 
-  window.onload = promise
-let textJoke: string = "";
+window.onload = promise;
+let textJoke: string = '';
 
 //interface
 interface RateJoke {
-  joke: string,
-  score: number,
-  date: string
-  
+  joke: string;
+  score: number;
+  date: string;
 }
 
 //arrays
-let acudits: object[] = []
+let acudits: object[] = [];
 let reportAcudits: object[] = [];
 
 //functions
-function rateJoke(scoreJoke: number){
+function rateJoke(scoreJoke: number) {
   const newDate = new Date();
   let textDate = newDate.toISOString();
   let rate: RateJoke = {
     joke: textJoke,
     score: scoreJoke,
-    date: textDate
-  }
-  
-    acudits.push(rate)
-  
+    date: textDate,
+  };
+
+  acudits.push(rate);
 }
 
-function selectFinalRate(){
-  
+function selectFinalRate() {
   let finalRate = acudits.pop();
-  reportAcudits.push(finalRate)
+  reportAcudits.push(finalRate);
   acudits = [];
-  return console.log(reportAcudits)
+  return console.log(reportAcudits);
 }
 
-function nextJoke(): string { 
-  promise()
-  selectFinalRate()
-  return p!.textContent = textJoke
-  
+function nextJoke(): string {
+  promise();
+  selectFinalRate();
+  return (p!.textContent = textJoke);
 }
