@@ -1,27 +1,54 @@
+//urls
+let url1 = 'https://icanhazdadjoke.com/';
+let url2 =
+  'https://api.openweathermap.org/data/2.5/weather?q=barcelona,es&appid=21c127bb06111bdb9012ed3611eb5b2b';
 //html getters
+let info = document.getElementById('info');
 let p = document.getElementById('joke');
-let btn1 = document.getElementById('btn1');
-let btn2 = document.getElementById('btn2');
-let btn3 = document.getElementById('btn3');
 //objects
 let option: object = {
   headers: {
     Accept: 'application/json',
   },
 };
-//promesa
-let promise: any = () =>
-  fetch('https://icanhazdadjoke.com/', option)
+//promesas
+let textJoke: string = '';
+function promise() {
+  fetch(url1, option)
     .then((response) => response.json())
     .then((jokes) => {
       textJoke = jokes.joke;
       p!.textContent = textJoke;
     })
-    .catch((err) => alert('Ha habido un problema ' + err));
+    .catch((err) => alert(err));
+}
 
-window.onload = promise;
-let textJoke: string = '';
+promise();
 
+//weather variables
+let description: string = '';
+let country: string = '';
+let nom: string = '';
+let icon: string = '';
+let main: string = '';
+function weather() {
+  fetch(url2)
+    .then((response) => response.json())
+    .then((data) => {
+      nom = data.name;
+      icon = data.weather[0].icon;
+      main = data.weather[0].main;
+      country = data.sys.country;
+      description = data.weather[0].description;
+      info!.innerHTML = `
+      <img src="http://openweathermap.org/img/wn/${icon}@2x.png" width="50" height="50">
+      <span>${nom}, ${country}: ${main}(${description})</span>
+      `;
+    })
+    .catch((err) => alert(err));
+}
+
+window.onload = weather;
 //interface
 interface RateJoke {
   joke: string;
@@ -35,8 +62,9 @@ let reportAcudits: object[] = [];
 
 //functions
 function rateJoke(scoreJoke: number) {
-  const newDate = new Date();
-  let textDate = newDate.toISOString();
+  const d = new Date();
+  d.setHours(d.getHours() + 1);
+  let textDate = d.toISOString();
   let rate: RateJoke = {
     joke: textJoke,
     score: scoreJoke,

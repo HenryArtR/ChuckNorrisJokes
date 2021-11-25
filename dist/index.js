@@ -1,41 +1,68 @@
 "use strict";
+//urls
+let url1 = 'https://icanhazdadjoke.com/';
+let url2 = 'https://api.openweathermap.org/data/2.5/weather?q=barcelona,es&appid=21c127bb06111bdb9012ed3611eb5b2b';
 //html getters
-var p = document.getElementById('joke');
-var btn1 = document.getElementById('btn1');
-var btn2 = document.getElementById('btn2');
-var btn3 = document.getElementById('btn3');
+let info = document.getElementById('info');
+let p = document.getElementById('joke');
 //objects
-var option = {
+let option = {
     headers: {
-        Accept: 'application/json'
-    }
+        Accept: 'application/json',
+    },
 };
-//promesa
-var promise = function () { return fetch('https://icanhazdadjoke.com/', option)
-    .then(function (response) { return response.json(); })
-    .then(function (jokes) {
-    textJoke = jokes.joke;
-    p.textContent = textJoke;
-})
-    .catch(function (err) { return alert('Ha habido un problema ' + err); }); };
-window.onload = promise;
-var textJoke = "";
+//promesas
+let textJoke = '';
+function promise() {
+    fetch(url1, option)
+        .then((response) => response.json())
+        .then((jokes) => {
+        textJoke = jokes.joke;
+        p.textContent = textJoke;
+    })
+        .catch((err) => alert(err));
+}
+promise();
+//weather variables
+let description = '';
+let country = '';
+let nom = '';
+let icon = '';
+let main = '';
+function weather() {
+    fetch(url2)
+        .then((response) => response.json())
+        .then((data) => {
+        nom = data.name;
+        icon = data.weather[0].icon;
+        main = data.weather[0].main;
+        country = data.sys.country;
+        description = data.weather[0].description;
+        info.innerHTML = `
+      <img src="http://openweathermap.org/img/wn/${icon}@2x.png" width="50" height="50">
+      <span>${nom}, ${country}: ${main}(${description})</span>
+      `;
+    })
+        .catch((err) => alert(err));
+}
+window.onload = weather;
 //arrays
-var acudits = [];
-var reportAcudits = [];
+let acudits = [];
+let reportAcudits = [];
 //functions
 function rateJoke(scoreJoke) {
-    var newDate = new Date();
-    var textDate = newDate.toISOString();
-    var rate = {
+    const d = new Date();
+    d.setHours(d.getHours() + 1);
+    let textDate = d.toISOString();
+    let rate = {
         joke: textJoke,
         score: scoreJoke,
-        date: textDate
+        date: textDate,
     };
     acudits.push(rate);
 }
 function selectFinalRate() {
-    var finalRate = acudits.pop();
+    let finalRate = acudits.pop();
     reportAcudits.push(finalRate);
     acudits = [];
     return console.log(reportAcudits);
@@ -43,6 +70,6 @@ function selectFinalRate() {
 function nextJoke() {
     promise();
     selectFinalRate();
-    return p.textContent = textJoke;
+    return (p.textContent = textJoke);
 }
 //# sourceMappingURL=index.js.map

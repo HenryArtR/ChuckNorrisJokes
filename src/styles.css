@@ -1,5 +1,5 @@
 .fondo {
-    background-image: url(../img/ranas.jpg);
-    background-repeat: no-repeat;
-    background-size: 100%;
+  background-image: url(../img/funny.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
