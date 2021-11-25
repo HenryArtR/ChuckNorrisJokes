@@ -1,75 +1,87 @@
 "use strict";
-//urls
-let url1 = 'https://icanhazdadjoke.com/';
-let url2 = 'https://api.openweathermap.org/data/2.5/weather?q=barcelona,es&appid=21c127bb06111bdb9012ed3611eb5b2b';
-//html getters
-let info = document.getElementById('info');
-let p = document.getElementById('joke');
-//objects
-let option = {
+// urls
+const url1 = 'https://icanhazdadjoke.com/';
+const url2 = 'https://api.openweathermap.org/data/2.5/weather?q=barcelona,es&appid=21c127bb06111bdb9012ed3611eb5b2b';
+const url3 = 'https://api.chucknorris.io/jokes/random';
+// html getters
+const info = document.getElementById('info');
+const p = document.getElementById('joke');
+// objects
+const option = {
     headers: {
         Accept: 'application/json',
     },
 };
-//promesas
-let textJoke = '';
+// Arrays
+const random = [];
+const acudits = [];
+const reportJokes = [];
+// joke
 function promise() {
     fetch(url1, option)
         .then((response) => response.json())
-        .then((jokes) => {
-        textJoke = jokes.joke;
-        p.textContent = textJoke;
-    })
+        .then((jokes) => random.push(jokes.joke))
         .catch((err) => alert(err));
 }
-promise();
-//weather variables
-let description = '';
+// weather
 let country = '';
 let nom = '';
 let icon = '';
-let main = '';
+let grados = '';
 function weather() {
     fetch(url2)
         .then((response) => response.json())
         .then((data) => {
+        grados = (data.main.temp - 273.15).toFixed(1);
         nom = data.name;
         icon = data.weather[0].icon;
-        main = data.weather[0].main;
         country = data.sys.country;
-        description = data.weather[0].description;
         info.innerHTML = `
       <img src="http://openweathermap.org/img/wn/${icon}@2x.png" width="50" height="50">
-      <span>${nom}, ${country}: ${main}(${description})</span>
+      <span>${grados}ºC ${nom}, ${country}</span>
       `;
     })
         .catch((err) => alert(err));
 }
 window.onload = weather;
-//arrays
-let acudits = [];
-let reportAcudits = [];
-//functions
+// chuckNorris
+function jokeNorris() {
+    fetch(url3)
+        .then((response) => response.json())
+        .then((joke) => random.push(joke.value))
+        .catch((err) => alert(err));
+}
+// functions
+function getRandomJoke(rdm) {
+    const randomItem = Math.floor(Math.random() * rdm.length);
+    item = rdm[randomItem];
+    return item;
+}
+window.addEventListener('load', getRandomJoke(random));
 function rateJoke(scoreJoke) {
     const d = new Date();
     d.setHours(d.getHours() + 1);
-    let textDate = d.toISOString();
-    let rate = {
-        joke: textJoke,
+    const textDate = d.toISOString();
+    const rate = {
+        joke: getRandomJoke(random),
         score: scoreJoke,
         date: textDate,
     };
     acudits.push(rate);
 }
-function selectFinalRate() {
-    let finalRate = acudits.pop();
-    reportAcudits.push(finalRate);
-    acudits = [];
-    return console.log(reportAcudits);
+function finalRate() {
+    let final = acudits.pop();
+    reportJokes.push(final);
+    console.log(reportJokes);
 }
 function nextJoke() {
     promise();
-    selectFinalRate();
-    return (p.textContent = textJoke);
+    jokeNorris();
+    finalRate();
+    if (p.textContent == null) {
+        return p.textContent = getRandomJoke(random);
+    }
+    else {
+    }
 }
 //# sourceMappingURL=index.js.map
