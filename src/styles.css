@@ -1,5 +1,54 @@
-.fondo {
-  background-image: url(../img/funny.jpg);
+.fondo1 {
+  background-image: url(../svg/blob1.svg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: auto;
+  background-position: center;
+}
+.fondo2 {
+  background-image: url(../svg/blob2.svg);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+}
+.fondo3 {
+  background-image: url(../svg/blob3.svg);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+}
+.fondo4 {
+  background-image: url(../svg/blob4.svg);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+}
+.fondo5 {
+  background-image: url(../svg/blob5.svg);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+}
+
+.rounded-circle {
+  width: 2.7rem;
+  height: 2.7rem;
+}
+
+#img1 {
+  background-image: url(../img/emotes.jpg);
+  background-position: center;
+  background-position-x: -375px;
+  background-position-y: -33px;
+}
+#img2 {
+  background-image: url(../img/emotes.jpg);
+  background-position: center;
+  background-position-x: -152px;
+  background-position-y: -33px;
+}
+#img3 {
+  background-image: url(../img/emotes.jpg);
+  background-position: center;
+  background-position-x: -319px;
+  background-position-y: -33px;
 }
