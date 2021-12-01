@@ -102,7 +102,9 @@ function finalRate(): any {
 function nextJoke(): any {
   promise();
   jokeNorris();
-  finalRate();
+  if(acudits.length !== 0){
+    finalRate()
+  }
   fondo!.classList.remove(`fondo${num}`);
   randomFondo();
   p!.textContent = random();
